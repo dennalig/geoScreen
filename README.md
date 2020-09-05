@@ -7,8 +7,8 @@ Alternatively, since the Geocoder api is not perfectly accurate in detecting the
 Tools used: PyQt5, Geocoder API, Flickr API (https://www.flickr.com/services/api/) ,REST Countries API (https://restcountries.eu/) , Python Pickle library
 
 What I learned:
--How to use various Python libraries such as "os", "pickle", etc. 
--How to parse the JSON data of an api
--How to properly utilize and hide important portions of data such as api keys.
+-using various Python libraries such as "os", "pickle", etc. 
+-parsing the JSON data of an api
+-utilizing and hide important portions of data such as api keys.
 -How the PyQty designer and libraries work
 -There are so many useful and free apis
