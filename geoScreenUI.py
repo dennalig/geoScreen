@@ -28,6 +28,19 @@ import urllib.request
 import sys
 import pathlib
 
+
+import easygui
+
+
+def internet_on():
+    try:
+        urllib.request.urlopen('http://216.58.192.142', timeout=1)
+        return True
+    except urllib.request.URLError: 
+        return False
+
+
+
 api_key = os.environ.get('MY_FLICKR_API')
 api_secret= os.environ.get('MY_FLICKR_SECRET')
 extras='url_l'
@@ -202,6 +215,7 @@ class Ui_MainWindow(object):
         
         #usage of geocoder functions here
         ipLocation= self.getAddressFromIp().strip() # will need a conditional
+        ipLocation=self.appendUSA(ipLocation) # we get better/ more results with USA
         global locationString #must declare as global
         global customLocationOn
         if(locationString=='' or (locationString!=ipLocation and (not customLocationOn))): # conditions to call main automatically, if no location is detected, or a change has been detected along with a turned off custom switch
@@ -279,6 +293,7 @@ class Ui_MainWindow(object):
             # print('Refresh Location')
             global locationString
             locationString=self.getAddressFromIp()
+            locationString=self.appendUSA(locationString)
             saveLocationToPickle(locationString)
             #search new images
             self.presentLocation()# displays location
@@ -323,6 +338,7 @@ class Ui_MainWindow(object):
             # print(newState)
             newCountry= self.countryCBox.currentText()
             countryAbrev= newCountry[0:2].strip()
+            countryAbrev=self.appendUSA(countryAbrev)
             if(newState!=""): # new State case
                 locationString=newCity+", "+newState+", "+countryAbrev
             else:
@@ -481,17 +497,29 @@ class Ui_MainWindow(object):
         msg.setIcon(QMessageBox.Information)
         x = msg.exec_()
 
+    def appendUSA(self, ipString):
+        if(ipString[len(ipString)-2:]=='US'): # we get better/ more results with USA
+            ipString=ipString+'A'
+            return ipString
+        else:
+            ipString
+
 
 if __name__ == "__main__":
     import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    app_icon = QtGui.QIcon()
-    app_icon.addFile('locationIcon.ico', QtCore.QSize(16,16))
-    # app.setWindowIcon(QtGui.QIcon(app_icon))
-    # MainWindow.setWindowIcon(QtGui.QIcon(app_icon))
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    internet=internet_on() # testing for internet
+    if(internet):
+        app = QtWidgets.QApplication(sys.argv)
+        MainWindow = QtWidgets.QMainWindow()
+        app_icon = QtGui.QIcon()
+        app_icon.addFile('locationIcon.ico', QtCore.QSize(16,16))
+        # app.setWindowIcon(QtGui.QIcon(app_icon))
+        # MainWindow.setWindowIcon(QtGui.QIcon(app_icon))
+        ui = Ui_MainWindow()
+        ui.setupUi(MainWindow)
+        MainWindow.show()
     
-    sys.exit(app.exec_())
+        sys.exit(app.exec_())
+    else:
+        easygui.msgbox("In order for Geo-Screen to function, please connect to the Internet.", title="Please Connect to the Internet.")
+        print("No internet.")
