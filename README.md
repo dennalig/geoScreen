@@ -1,11 +1,8 @@
 # geoScreen
 
+![GHLogo](https://user-images.githubusercontent.com/39264885/92990521-2a086680-f4ab-11ea-8956-34e3257e3143.png)
+
 User Download Site: https://dennaligrissom7.wixsite.com/mygeoscreen
-
-
-
-
-
 
 Description:
 This is a desktop gui, which detects the user's phyisical location using the Geocoder Python api,searches through flickr.com for wallpaper worthy images that are tagged within that location using the Flickr api and saves them to a local folder on their machine.
