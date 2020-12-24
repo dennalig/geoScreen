@@ -31,7 +31,7 @@ import pathlib
 
 import easygui
 
-
+#TOdo ....incorporate imported libraries for object detection among pictures to remove images that have people in them
 def internet_on():
     try:
         urllib.request.urlopen('http://216.58.192.142', timeout=1)
@@ -219,6 +219,7 @@ class Ui_MainWindow(object):
         global locationString #must declare as global
         global customLocationOn
         if(locationString=='' or (locationString!=ipLocation and (not customLocationOn))): # conditions to call main automatically, if no location is detected, or a change has been detected along with a turned off custom switch
+            
             locationString =ipLocation
             self.main()
             saveLocationToPickle(locationString)
@@ -458,25 +459,36 @@ class Ui_MainWindow(object):
         self.deleteAllLocationPics()
         photos= jsonVar['photos']
         pagePhoto=photos['photo']
-    
-        self.showLoadingMsg()
-        counter=0
+
+        validUrls= [] #url list, we store valid sizes into the list and then save 
+        self.showLoadingMsg() #warning msg to user of the length
+        counter=0 #counter to determine the name of the file.
         for x in pagePhoto:
-            print(x)
+            # print(x) # Shows gathered info of all images from location string 
             if('height_l' in x and 'width_l' in x):
                 height=int(x['height_l'])
                 width=int(x['width_l'])
                 if(height>= 683 and width >= 1024):
                     # print(str(height)+" "+ str(width) + " "+ x['url_l'])
-                    counter+=1
+                    
                     url= x['url_l']
-                    self.url_to_jpg(url,'geolock', counter)
+                    validUrls.append(url)
+        # print('printing urls...')
+        # we make a list of urls then convert from url to jpg
+        for url in validUrls:
+            counter+=1
+            self.url_to_jpg(url,'geo-pic #', counter)
+            # print(url)
+
+        
+
+        # self.url_to_jpg(url,'geolock', counter)
             # we stoped here:
             # python parameter explanation:  https://joequery.me/code/flickr-api-image-search-python/
             # flickr api page explanation :https://www.flickr.com/services/api/explore/flickr.photos.search
             # api key, : chttps://www.flickr.com/services/apps/create/noncommercial/?
 
-
+#parameters.... url, string, int index
     def url_to_jpg(self,url, file_name,i):
         SAVE_FOLDER = 'Geo images\\' +file_name +str(i)+'.jpg'
         urllib.request.urlretrieve(url, SAVE_FOLDER)
