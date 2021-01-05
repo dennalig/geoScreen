@@ -41,8 +41,8 @@ def internet_on():
 
 
 
-api_key = os.environ.get('MY_FLICKR_API')
-api_secret= os.environ.get('MY_FLICKR_SECRET')
+api_key = os.environ.get('GEO-SCREEN_FLICKR_API')
+api_secret= os.environ.get('GEO-SCREEN_FLICKR_SECRET')
 extras='url_l'
 flickr = flickrapi.FlickrAPI(api_key, api_secret, format='parsed-json')
 
