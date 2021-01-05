@@ -41,10 +41,10 @@ def internet_on():
 
 
 
-api_key = str(os.environ.get('GEO_SCREEN_FLICKR_API')).encode('utf-8')
-api_secret= str(os.environ.get('GEO_SCREEN_FLICKR_SECRET')).encode('utf-8')
+api_key = os.environ.get('GEO_SCREEN_FLICKR_API')
+api_secret= os.environ.get('GEO_SCREEN_FLICKR_SECRET')
 extras='url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o'
-flickr = FlickrAPI(api_key, api_secret, format="utf-8")
+flickr = FlickrAPI(api_key, api_secret, format='parsed-json')
 #new valid format
 
 FLICKR_IMAGE = \
@@ -459,6 +459,8 @@ class Ui_MainWindow(object):
     def generateJson(self, jsonVar):
         self.deleteAllLocationPics()
         # print(jsonVar)
+       
+
         photos= jsonVar['photos']
         pagePhoto=photos['photo']
 
@@ -466,7 +468,7 @@ class Ui_MainWindow(object):
         self.showLoadingMsg() #warning msg to user of the length
         counter=0 #counter to determine the name of the file.
         for x in pagePhoto:
-            # print(x) # Shows gathered info of all images from location string 
+             # Shows gathered info of all images from location string 
             if('height_l' in x and 'width_l' in x):
                 height=int(x['height_l'])
                 width=int(x['width_l'])
