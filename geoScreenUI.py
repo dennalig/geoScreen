@@ -22,7 +22,7 @@ import os
 import geocoder
 import requests
 from bs4 import *
-import flickrapi
+from flickrapi import FlickrAPI
 import pandas as pd
 import urllib.request
 import sys
@@ -41,10 +41,11 @@ def internet_on():
 
 
 
-api_key = os.environ.get('GEO-SCREEN_FLICKR_API')
-api_secret= os.environ.get('GEO-SCREEN_FLICKR_SECRET')
-extras='url_l'
-flickr = flickrapi.FlickrAPI(api_key, api_secret, format='parsed-json')
+api_key = str(os.environ.get('GEO_SCREEN_FLICKR_API')).encode('utf-8')
+api_secret= str(os.environ.get('GEO_SCREEN_FLICKR_SECRET')).encode('utf-8')
+extras='url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o'
+flickr = FlickrAPI(api_key, api_secret, format="utf-8")
+#new valid format
 
 FLICKR_IMAGE = \
     'https://www.flickr.com/search/?q='
@@ -457,6 +458,7 @@ class Ui_MainWindow(object):
 
     def generateJson(self, jsonVar):
         self.deleteAllLocationPics()
+        # print(jsonVar)
         photos= jsonVar['photos']
         pagePhoto=photos['photo']
 
@@ -486,7 +488,7 @@ class Ui_MainWindow(object):
             # we stoped here:
             # python parameter explanation:  https://joequery.me/code/flickr-api-image-search-python/
             # flickr api page explanation :https://www.flickr.com/services/api/explore/flickr.photos.search
-            # api key, : chttps://www.flickr.com/services/apps/create/noncommercial/?
+            # api key, : https://www.flickr.com/services/apps/create/noncommercial/?
 
 #parameters.... url, string, int index
     def url_to_jpg(self,url, file_name,i):
