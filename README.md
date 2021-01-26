@@ -2,6 +2,8 @@
 
 ![GHLogo](https://user-images.githubusercontent.com/39264885/92990521-2a086680-f4ab-11ea-8956-34e3257e3143.png)
 
+![pyQt5](https://bs-uploads.toptal.io/blackfish-uploads/components/skill_page/content/logo_file/logo/195552/pyqt-caec91f10186bed5702797db226cc442.png) !
+
 User Download Site: https://dennaligrissom7.wixsite.com/mygeoscreen
 
 
